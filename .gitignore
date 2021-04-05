@@ -1,5 +1,6 @@
 # Project folder
 .env
+.token
 cache/
 
 # third-party library
