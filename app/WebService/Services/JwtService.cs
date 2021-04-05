@@ -24,10 +24,8 @@ namespace WebService.Services
         public string GenerateToken(string userName, int expireMinutes = 30)
         {
             // 從設定檔中取得設定參數，在此範例中使用指定字串
-            //var issuer = Configuration.GetValue<string>("JwtSettings:Issuer");
-            //var signKey = Configuration.GetValue<string>("JwtSettings:SignKey");
-            var issuer = "AuthDemoProject";
-            var signKey = "1qaz2wsx3edc4rfv%TGB^YHN&UJM*IK<9ol.0p;/!@#$qwerASDFzxcv%^&*tyuiGHJKbnm,OP>?";
+            var issuer = Configuration.GetValue<string>("JwtSettings:Issuer");
+            var signKey = Configuration.GetValue<string>("JwtSettings:SignKey");
 
             // 設定要加入到 JWT Token 中的聲明資訊(Claims)
             var claims = new List<Claim>();
@@ -69,6 +67,10 @@ namespace WebService.Services
             // SecurityTokenDescriptor 是定義 JWT 生成的相關設定，其中將 JWT 的 Claim 會放置在 Subject 屬性  
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                // 註冊 Token 發送者 ( Issuer )
+                Issuer = issuer,
+                // 註冊 Token 使用者，由於你的 API 受眾通常沒有區分特別對象，因此通常不太需要設定，也不太需要驗證
+                Audience = issuer,
                 //NotBefore = DateTime.Now, // 預設值就是 DateTime.Now
                 //IssuedAt = DateTime.Now, // 預設值就是 DateTime.Now
                 Subject = userClaimsIdentity,
