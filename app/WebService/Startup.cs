@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebService
 {
@@ -25,7 +26,19 @@ namespace WebService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // 註冊使用 Controllers 
             services.AddControllers();
+
+            // 註冊使用 Authentication 服務
+            // 於專案設定 NuGet 套件引用 Microsoft.AspNetCore.Authentication.JwtBearer，並依據專案框架版本選用套件
+            // Ref : https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer/3.0.0
+            // .NET Core 共有兩種驗證機制，JwtBearer、Cookie，兩者差別可參考說明文獻
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => Configuration.Bind("JwtSettings", options));
+
+            // 註冊 JWT 處理服務
+            services.AddSingleton<WebService.Services.JwtService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +53,9 @@ namespace WebService
 
             app.UseRouting();
 
+            // 啟用 Authentication 中介軟體
+            app.UseAuthentication();
+            // 啟用 Authorization 中介軟體
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
