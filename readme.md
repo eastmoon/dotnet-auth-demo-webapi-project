@@ -1,6 +1,6 @@
-# dotnet-lifetime-demo-webapi-project
+# .NET Core WebAPI 驗證與授權範例專案
 
-此專案為 .NET Core 生命週期範例專案。
+此專案為 .NET Core WebAPI 驗證與授權範例專案。
 
 本專案基於 [docker-dotnet-webapi](https://github.com/eastmoon/docker-dotnet-webapi) 設立：
 
