@@ -33,3 +33,18 @@ curl -s --request GET --header "Authorization: Bearer %TOKEN%" -d '{}' "https://
 echo.
 echo ^> Check Role : User
 curl -s --request GET --header "Authorization: Bearer %TOKEN%" -d '{}' "https://localhost:44386/auth/CheckUserRole"
+echo.
+echo ^> Check AccessLevel : 1
+curl -s --request GET --header "Authorization: Bearer %TOKEN%" -d '{}' "https://localhost:44386/auth/CheckLevel1"
+echo.
+echo ^> Check AccessLevel : 2 ( It will failed, because token only have level 1)
+curl -s --request GET --header "Authorization: Bearer %TOKEN%" -d '{}' "https://localhost:44386/auth/CheckLevel2"
+echo.
+echo ^> Check Role = Admin, AccessLevel = 1
+curl -s --request GET --header "Authorization: Bearer %TOKEN%" -d '{}' "https://localhost:44386/auth/CheckMultiRule1"
+echo.
+echo ^> Check Role = Admin, AccessLevel = 2 ( It will failed )
+curl -s --request GET --header "Authorization: Bearer %TOKEN%" -d '{}' "https://localhost:44386/auth/CheckMultiRule2"
+echo.
+echo ^> Check Role = Developer, AccessLevel = 1 ( It will failed )
+curl -s --request GET --header "Authorization: Bearer %TOKEN%" -d '{}' "https://localhost:44386/auth/CheckMultiRule3"

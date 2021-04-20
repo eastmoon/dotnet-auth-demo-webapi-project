@@ -64,5 +64,43 @@ namespace WebService.Controllers
         {
             return "Token has users roles";
         }
+
+        [Authorize(Policy = "AccessLevel-1")]
+        [HttpGet("[action]")]
+        public string CheckLevel1()
+        {
+            return "Token has AccessLevel 1";
+        }
+
+        [Authorize(Policy = "AccessLevel-2")]
+        [HttpGet("[action]")]
+        public string CheckLevel2()
+        {
+            return "Token has AccessLevel 2";
+        }
+
+        [Authorize(Policy = "AccessLevel-1")]
+        [Authorize(Roles = "Admin")]
+        [HttpGet("[action]")]
+        public string CheckMultiRule1()
+        {
+            return "Token has AccessLevel 1 and Role Admin";
+        }
+
+        [Authorize(Policy = "AccessLevel-2")]
+        [Authorize(Roles = "Admin")]
+        [HttpGet("[action]")]
+        public string CheckMultiRule2()
+        {
+            return "Token has AccessLevel 2 and Role Admin";
+        }
+
+        [Authorize(Policy = "AccessLevel-1")]
+        [Authorize(Roles = "Developer")]
+        [HttpGet("[action]")]
+        public string CheckMultiRule3()
+        {
+            return "Token has AccessLevel 1 and Role Developer";
+        }
     }
 }

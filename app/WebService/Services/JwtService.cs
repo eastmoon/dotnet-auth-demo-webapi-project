@@ -53,6 +53,9 @@ namespace WebService.Services
             claims.Add(new Claim("roles", "Admin"));
             claims.Add(new Claim("roles", "Users"));
 
+            // 自定義 JWT 內容，套用在 "accesslevel" 自定義的原則授權處理
+            claims.Add(new Claim("accesslevel", "1"));
+
             // 產生 Cliams 辨識物件
             var userClaimsIdentity = new ClaimsIdentity(claims);
 

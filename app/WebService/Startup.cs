@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebService
 {
@@ -76,6 +77,16 @@ namespace WebService
 
             // 註冊 JWT 處理服務
             services.AddSingleton<WebService.Services.JwtService>();
+
+            // 註冊原則授權處理函式
+            services.AddSingleton<IAuthorizationHandler, Core.Authorize.AccessLevelHandler>();
+
+            // 註冊原則授權
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AccessLevel-1", policy => policy.Requirements.Add(new Core.Authorize.AccessLevelRequirement(1)));
+                options.AddPolicy("AccessLevel-2", policy => policy.Requirements.Add(new Core.Authorize.AccessLevelRequirement(2)));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
