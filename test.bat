@@ -28,7 +28,7 @@ echo.
 echo ^> Check Role : Admin
 curl -s --request GET --header "Authorization: Bearer %TOKEN%" -d '{}' "https://localhost:44386/auth/CheckAdminRole"
 echo.
-echo ^> Check Role : Developer ( It will failed, because token didn't ​add developer roles)
+echo ^> Check Role : Developer ( It will failed, because token did not add developer roles)
 curl -s --request GET --header "Authorization: Bearer %TOKEN%" -d '{}' "https://localhost:44386/auth/CheckDeveloperRole"
 echo.
 echo ^> Check Role : User

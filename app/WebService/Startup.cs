@@ -51,22 +51,22 @@ namespace WebService
                         // 透過這項宣告，就可以從 "roles" 取值，並可讓 [Authorize] 判斷角色
                         RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
 
-                        // 一般我們都會驗證 Issuer
+                        // 驗證 Issuer 資訊，若驗證失敗則表示該 JWT 非本系統發出
                         ValidateIssuer = true,
                         ValidIssuer = Configuration.GetValue<string>("JwtSettings:Issuer"),
 
-                        // 通常不太需要驗證 Audience
+                        // 驗證 Audience 資訊，若驗證失敗則表示該 JWT 非本系統發出
                         // 若不驗證就不需要填寫並設為 false
                         ValidateAudience = true,
                         ValidAudience = Configuration.GetValue<string>("JwtSettings:Issuer"),
 
-                        // 一般我們都會驗證 Token 的有效期間
+                        // 驗證 Token 的有效期間
                         ValidateLifetime = true,
 
-                        // 如果 Token 中包含 key 才需要驗證，一般都只有簽章而已
+                        // 若 Token 中包含 key 需要驗證其內容，若未提供則應避免驗證
                         ValidateIssuerSigningKey = false,
 
-                        // 驗證碼 應該從 IConfiguration 取得
+                        // 提供自 IConfiguration 取得的驗證碼
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("JwtSettings:SignKey")))
                     };
 
